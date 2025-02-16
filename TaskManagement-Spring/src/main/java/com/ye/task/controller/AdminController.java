@@ -38,4 +38,21 @@ public class AdminController {
         return ResponseEntity.ok(adminService.getAllTasks());
     }
 
+    @DeleteMapping("/task/{id}")
+    public ResponseEntity<Void> deleteTask(@PathVariable Long id  ){
+        adminService.deleteTask(id);
+        return ResponseEntity.ok(null);
+    }
+
+    @GetMapping("/task/{id}")
+    public ResponseEntity<TaskDto> getTaskById(@PathVariable Long id ) {
+        return ResponseEntity.ok(adminService.getTaskById(id));
+    }
+
+    @PutMapping("/task/{id}")
+    public ResponseEntity<?> updateTask( @PathVariable Long id , @RequestBody TaskDto taskDto ) {
+            TaskDto updatedTask = adminService.updateTask(id , taskDto );
+            if ( updatedTask == null ) return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+            return ResponseEntity.ok(updatedTask);
+    }
 }

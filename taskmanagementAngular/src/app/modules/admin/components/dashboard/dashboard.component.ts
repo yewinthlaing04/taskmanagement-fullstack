@@ -22,5 +22,12 @@ export class DashboardComponent {
     })
   }
 
+  deleteTask( id : number ) {
+    this.adminService.deleteTask(id).subscribe( ( res ) => {
+      alert ( "task deleted successfully ")
+      this.getAllTasks()
+    } )
+  }
+
 
 }

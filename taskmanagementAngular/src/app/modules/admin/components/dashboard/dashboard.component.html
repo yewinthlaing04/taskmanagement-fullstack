@@ -8,19 +8,26 @@
         <p class="text-muted mb-3">{{ task.description }}</p>
 
         <!-- Task Details -->
-        <div class="d-flex justify-content-between border-top pt-2">
-          <span><strong>Due Date:</strong> <span class="fw-bold text-dark">{{ task.dueDate | date: 'MMM d, y' }}</span></span>
-          <span><strong>Employee:</strong> <span class="fw-bold text-dark">{{ task.employeeName }}</span></span>
+        <div class="border-top pt-2">
+          <span><strong class="text-primary">Due Date: </strong> <span class="fw-bold text-dark">{{ task.dueDate | date: 'MMM d, y' }}</span></span> <br>
+          <span><strong class="text-primary">Employee: </strong> <span class="fw-bold text-dark">{{ task.employeeName }}</span></span>
         </div>
 
         <div class="d-flex justify-content-between border-top pt-2 mt-2">
-          <span><strong>Priority:</strong>
-            <span class="fw-bold text-uppercase text-danger">{{ task.priority }}</span>
+          <span><strong>Priority: </strong>
+            <span class="fw-bold text-uppercase text-danger me-2">{{ task.priority }}</span>
           </span>
-          <span><strong>Status:</strong>
+          <span><strong>Status: </strong>
             <span class="fw-bold text-uppercase text-primary">{{ task.taskStatus }}</span>
           </span>
         </div>
+      </div>
+
+      <!-- Card Footer -->
+      <div class="card-footer bg-white border-top pt-2 d-flex justify-content-between">
+        <button class="btn btn-outline-primary btn-sm" routerLink="/admin/task-details/{{task.id}}">View</button>
+        <button class="btn btn-outline-warning btn-sm" routerLink="/admin/task/{{task.id}}/edit" >Edit</button>
+        <button class="btn btn-outline-danger btn-sm" (click)="deleteTask(task.id)">Delete</button>
       </div>
     </div>
   </div>

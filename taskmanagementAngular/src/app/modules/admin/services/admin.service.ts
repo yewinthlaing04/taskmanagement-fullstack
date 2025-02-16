@@ -21,7 +21,7 @@ export class AdminService {
   }
 
   createTask(taskDto : any ) : Observable<any> {
-    return this.http.post( BASE_URL + "api/admin/task-create" , taskDto , {
+    return this.http.post( BASE_URL + "api/admin/create-task" , taskDto , {
       headers : this.createAuthorizationHeader()
     })
   }
@@ -30,6 +30,24 @@ export class AdminService {
     return this.http.get( BASE_URL + "api/admin/tasks"  , {
       headers: this.createAuthorizationHeader()
     });
+  }
+
+  deleteTask( id : number ) : Observable<any> {
+    return this.http.delete( BASE_URL + "api/admin/task/" + id , {
+      headers : this.createAuthorizationHeader()
+    });
+  }
+
+  getTaskById( id : number ) : Observable<any> {
+    return this.http.get( BASE_URL + "api/admin/task/" + id  , {
+      headers : this.createAuthorizationHeader()
+    })
+  }
+
+  updateTask( id : number , taskDto : any ) : Observable<any> {
+    return this.http.put( BASE_URL + `api/admin/task/${id}` , taskDto , {
+      headers : this.createAuthorizationHeader()
+    })
   }
 
   private createAuthorizationHeader():HttpHeaders{

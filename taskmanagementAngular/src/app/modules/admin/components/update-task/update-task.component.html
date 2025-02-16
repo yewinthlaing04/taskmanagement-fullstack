@@ -1,0 +1,42 @@
+<div class="container">
+  <h2 class="text-center">Post Task</h2>
+  <form action="" [formGroup]="updateTaskForm" (ngSubmit)="updateTask()">
+    <div class="mt-3">
+      <label for="title" class="form-label">Title</label>
+      <input type="text"  formControlName="title" placeholder="Title" class="form-control">
+      <p *ngIf="updateTaskForm.get('title')?.touched && updateTaskForm.get('title')?.invalid" class="text-danger">Title required!</p>
+    </div>
+    <div class="mt-3">
+      <label for="description" class="form-label">Description</label>
+      <input type="text" name="description" formControlName="description" id="" class="form-control">
+      <p *ngIf="updateTaskForm.get('description')?.touched && updateTaskForm.get('description')?.invalid" class="text-danger">Description required!</p>
+    </div>
+    <div class="mt-3">
+      <label for="dueDate" class="form-label">Due Date</label>
+      <input type="date" name="dueDate" formControlName="dueDate" id="" class="form-control">
+      <p *ngIf="updateTaskForm.get('dueDate')?.touched && updateTaskForm.get('dueDate')?.invalid" class="text-danger">Due Date required!</p>
+    </div>
+    <div class="mt-3">
+      <label for="priority" class="form-label">Priority</label>
+      <select name="priority" id="priority" class="form-select" formControlName="priority">
+        <option *ngFor="let priority of listOfPriorities" [value]="priority">
+          {{ priority }}
+        </option>
+      </select>
+      <p *ngIf="updateTaskForm.get('priority')?.touched && updateTaskForm.get('priority')?.invalid" class="text-danger">Priority Required!</p>
+    </div>
+    <div class="mt-3">
+      <label for="employee" class="form-label">Employee</label>
+      <select name="employee" id="employee" class="form-select" formControlName="employeeId">
+        <option *ngFor="let employee of listOfEmployee" [value]="employee.id">
+          {{ employee.name}}
+        </option>
+      </select>
+      <p *ngIf="updateTaskForm.get('employeeId')?.touched && updateTaskForm.get('employeeId')?.invalid" class="text-danger">Employee Required!</p>
+    </div>
+    <button type="submit" class="btn btn-primary mt-3" >
+      Update Task
+    </button>
+  </form>
+</div>
+

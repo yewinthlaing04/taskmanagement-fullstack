@@ -1,0 +1,41 @@
+<div class="container">
+  <h2 class="text-center">Post Task</h2>
+  <form action="" [formGroup]="taskForm" (ngSubmit)="postTask()">
+    <div class="mt-3">
+      <label for="title" class="form-label">Title</label>
+      <input type="text"  formControlName="title" placeholder="Title" class="form-control">
+      <p *ngIf="taskForm.get('title')?.touched && taskForm.get('title')?.invalid" class="text-danger">Title required!</p>
+    </div>
+    <div class="mt-3">
+      <label for="description" class="form-label">Description</label>
+      <input type="text" name="description" formControlName="description" id="" class="form-control">
+      <p *ngIf="taskForm.get('description')?.touched && taskForm.get('description')?.invalid" class="text-danger">Description required!</p>
+    </div>
+    <div class="mt-3">
+      <label for="dueDate" class="form-label">Due Date</label>
+      <input type="date" name="dueDate" formControlName="dueDate" id="" class="form-control">
+      <p *ngIf="taskForm.get('dueDate')?.touched && taskForm.get('dueDate')?.invalid" class="text-danger">Due Date required!</p>
+    </div>
+    <div class="mt-3">
+      <label for="priority" class="form-label">Priority</label>
+      <select name="priority" id="priority" class="form-select" formControlName="priority">
+        <option *ngFor="let priority of listOfPriorities" [value]="priority">
+          {{ priority }}
+        </option>
+      </select>
+      <p *ngIf="taskForm.get('priority')?.touched && taskForm.get('priority')?.invalid" class="text-danger">Priority Required!</p>
+    </div>
+    <div class="mt-3">
+      <label for="employee" class="form-label">Employee</label>
+      <select name="employee" id="employee" class="form-select" formControlName="employeeId">
+        <option *ngFor="let employee of listOfEmployees" [value]="employee.id">
+          {{ employee.name}}
+        </option>
+      </select>
+      <p *ngIf="taskForm.get('employeeId')?.touched && taskForm.get('employeeId')?.invalid" class="text-danger">Employee Required!</p>
+    </div>
+    <button type="submit" class="btn btn-primary mt-3" >
+      Post Task
+    </button>
+  </form>
+</div>

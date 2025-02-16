@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { AdminService } from '../../services/admin.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -7,5 +8,19 @@ import { Component } from '@angular/core';
   styleUrl: './dashboard.component.css'
 })
 export class DashboardComponent {
+
+
+  listOfTask : any = []
+
+  constructor( private adminService : AdminService){
+    this.getAllTasks()
+  }
+
+  getAllTasks(){
+    this.adminService.getAllTask().subscribe( (res) => {
+      this.listOfTask = res;
+    })
+  }
+
 
 }

@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { AdminService } from '../../services/admin.service';
+import { FormBuilder, FormGroup } from '@angular/forms';
 
 @Component({
   selector: 'app-dashboard',
@@ -9,11 +10,16 @@ import { AdminService } from '../../services/admin.service';
 })
 export class DashboardComponent {
 
-
+  searchForm! : FormGroup
   listOfTask : any = []
 
-  constructor( private adminService : AdminService){
+  constructor( private adminService : AdminService ,
+    private form : FormBuilder
+  ){
     this.getAllTasks()
+    this.searchForm = form.group( {
+      title : [ null ]
+    })
   }
 
   getAllTasks(){
@@ -29,5 +35,14 @@ export class DashboardComponent {
     } )
   }
 
+  searchTask(){
+    this.listOfTask = []
+    const title = this.searchForm.get('title')?.value
+    console.log(title)
+    this.adminService.searchTask(title).subscribe( (res) => {
+      console.log(res)
+      this.listOfTask = res 
+    })
+  }
 
 }

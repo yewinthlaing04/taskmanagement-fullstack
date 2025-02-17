@@ -7,6 +7,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/api/admin")
 //@CrossOrigin(origins = "http://localhost:4200")
@@ -54,5 +56,10 @@ public class AdminController {
             TaskDto updatedTask = adminService.updateTask(id , taskDto );
             if ( updatedTask == null ) return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
             return ResponseEntity.ok(updatedTask);
+    }
+
+    @GetMapping("/tasks/search/{title}")
+    public ResponseEntity<List<TaskDto>> searchTask(@PathVariable String title ) {
+        return ResponseEntity.ok(adminService.searchTaskByTitle(title));
     }
 }

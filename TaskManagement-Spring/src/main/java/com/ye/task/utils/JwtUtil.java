@@ -1,10 +1,15 @@
 package com.ye.task.utils;
 
+import com.ye.task.entity.User;
+import com.ye.task.repo.UserRepository;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 
@@ -12,11 +17,18 @@ import java.security.Key;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 import java.util.function.Function;
 
 @Component
 public class JwtUtil {
 
+    @Autowired
+    private  UserRepository userRepository;
+
+    public JwtUtil(UserRepository userRepository) {
+        this.userRepository = userRepository;
+    }
 
     /**
      * Step 1 : Generate a JWT token using the user's Details
@@ -137,6 +149,16 @@ public class JwtUtil {
                 .build()
                 .parseClaimsJws(token)
                 .getBody();
+    }
+
+    public User getLoggedInUser(){
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if ( authentication != null && authentication.isAuthenticated() ) {
+            User user = (User) authentication.getPrincipal();
+            Optional<User> optionalUser = userRepository.findById(user.getId());
+            return optionalUser.orElse(null);
+        }
+        return null ;
     }
 
 }

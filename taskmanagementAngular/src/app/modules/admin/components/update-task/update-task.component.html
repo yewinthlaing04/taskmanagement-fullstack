@@ -26,6 +26,15 @@
       <p *ngIf="updateTaskForm.get('priority')?.touched && updateTaskForm.get('priority')?.invalid" class="text-danger">Priority Required!</p>
     </div>
     <div class="mt-3">
+      <label for="" class="form-label">Task Status</label>
+      <select name="status" id="status" class="form-select" formControlName="status">
+        <option *ngFor="let status of listOfTaskStatus" [value]="status">
+          {{ status}}
+        </option>
+      </select>
+      
+    </div>
+    <div class="mt-3">
       <label for="employee" class="form-label">Employee</label>
       <select name="employee" id="employee" class="form-select" formControlName="employeeId">
         <option *ngFor="let employee of listOfEmployee" [value]="employee.id">

@@ -15,7 +15,7 @@ export class UpdateTaskComponent {
   updateTaskForm : FormGroup;
   listOfEmployee : any = [] ;
   listOfPriorities : any = [ "LOW" , "MEDIUM" , "HIGH"]
-
+  listOfTaskStatus : any = [ "PENDING" , "INPROGRESS" , "COMPLETED" , "DEFERRED" , "CANCELLED"]
   constructor( private adminService : AdminService ,
     private router : ActivatedRoute ,
     private route : Router ,
@@ -29,7 +29,8 @@ export class UpdateTaskComponent {
       title : [ null , [Validators.required]],
       description: [null , [Validators.required]],
       dueDate: [null , [ Validators.required]],
-      priority: [ null , [ Validators.required]]
+      priority: [ null , [ Validators.required]],
+      status: [ null , [Validators.required]]
     })
   }
 

@@ -1,0 +1,50 @@
+<div class="container mt-4">
+  <div class="card shadow-sm border-0 p-4 rounded-4" style="max-width: 600px; margin: auto;">
+    <div class="card-body" *ngIf="taskData">
+      <!-- Task Title -->
+      <h3 class="fw-bold text-primary mb-3">{{ taskData.title }}</h3>
+      <p class="text-muted">{{ taskData.description }}</p>
+
+      <!-- Task Details -->
+      <div class="border-top pt-3">
+        <p><strong class="text-primary">Due Date:</strong>
+          <span class="fw-bold text-dark">{{ taskData.dueDate | date: 'MMM d, y' }}</span>
+        </p>
+        <p><strong class="text-primary">Employee:</strong>
+          <span class="fw-bold text-dark">{{ taskData.employeeName }}</span>
+        </p>
+        <p><strong class="text-primary">Priority:</strong>
+          <span class="fw-bold text-uppercase text-danger">{{ taskData.priority }}</span>
+        </p>
+        <p><strong class="text-primary">Status:</strong>
+          <span class="fw-bold text-uppercase text-primary">{{ taskData.taskStatus }}</span>
+        </p>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Comment Section -->
+  <div class="card shadow-sm border-0 p-3 rounded-4 mt-4" style="max-width: 600px; margin: auto;">
+    <div class="card-body">
+      <h5 class="fw-bold text-primary mb-3">Comments</h5>
+
+      <!-- Add Comment -->
+      <div class="mb-3 d-flex" [formGroup]="commentForm">
+        <input type="text" class="form-control me-2" formControlName="comment" placeholder="Write a comment...">
+        <button class="btn btn-primary" (click)="addComment()">Add</button>
+      </div>
+
+      <!-- Show All Comments -->
+      <div *ngIf="comments.length > 0">
+        <div *ngFor="let comment of comments" class="p-2 border-bottom">
+          <strong class="text-dark">{{ comment.user }}</strong>
+          <span class="text-muted small">{{ comment.date | date: 'short' }}</span>
+          <p class="mb-1">{{ comment.text }}</p>
+        </div>
+      </div>
+
+      <p *ngIf="comments.length === 0" class="text-muted">No comments yet. Be the first to comment!</p>
+    </div>
+  </div>
+</div>

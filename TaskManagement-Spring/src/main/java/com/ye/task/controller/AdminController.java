@@ -1,5 +1,6 @@
 package com.ye.task.controller;
 
+import com.ye.task.dto.CommentDto;
 import com.ye.task.dto.TaskDto;
 import com.ye.task.service.admin.AdminService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -61,5 +62,17 @@ public class AdminController {
     @GetMapping("/tasks/search/{title}")
     public ResponseEntity<List<TaskDto>> searchTask(@PathVariable String title ) {
         return ResponseEntity.ok(adminService.searchTaskByTitle(title));
+    }
+
+    @PostMapping("/task/comment/{taskId}")
+    public ResponseEntity<CommentDto> createComment(@PathVariable Long taskId , @RequestBody String content ) {
+        CommentDto commentDto = adminService.createComment( taskId , content ) ;
+        if ( commentDto == null ) return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+        return ResponseEntity.status(HttpStatus.CREATED).body(commentDto);
+    }
+
+    @GetMapping("/comments/{taskId}")
+    public ResponseEntity<List<CommentDto>> getCommentsByTaskId(@PathVariable Long taskId){
+        return ResponseEntity.ok(adminService.getCommentsByTaskId(taskId));
     }
 }

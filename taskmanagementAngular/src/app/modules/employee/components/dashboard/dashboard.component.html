@@ -1,1 +1,39 @@
-<p>employee dashboard works!</p>
+<div class="container mt-4">
+
+  <div class="d-flex flex-wrap justify-content-center gap-3">
+    <div class="card shadow-sm border-0 p-3 rounded-4"
+         style="width: 320px; min-width: 280px;" *ngFor="let task of listOfTasks">
+      <div class="card-body">
+        <!-- Task Title -->
+        <h5 class="fw-bold text-primary mb-1">{{ task.title }}</h5>
+        <p class="text-muted mb-3">{{ task.description }}</p>
+
+        <!-- Task Details -->
+        <div class="border-top pt-2">
+          <span><strong class="text-primary">Due Date: </strong> <span class="fw-bold text-dark">{{ task.dueDate | date: 'MMM d, y' }}</span></span> <br>
+          <span><strong class="text-primary">Employee: </strong> <span class="fw-bold text-dark">{{ task.employeeName }}</span></span>
+        </div>
+
+        <div class="d-flex justify-content-between border-top pt-2 mt-2">
+          <span><strong>Priority: </strong>
+            <span class="fw-bold text-uppercase text-danger me-2">{{ task.priority }}</span>
+          </span>
+          <span><strong>Status: </strong>
+            <span class="fw-bold text-uppercase text-primary">{{ task.taskStatus }}</span>
+          </span>
+        </div>
+      </div>
+
+      <!-- Card Footer -->
+      <div class="dropdown mt-3">
+        <button class="btn btn-outline-primary dropdown-toggle w-100" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+          Update Status
+        </button>
+        <ul class="dropdown-menu w-100">
+          <li><button class="dropdown-item" (click)="updateTask(task.id, 'INPROGRESS')">IN PROGRESS</button></li>
+          <li><button class="dropdown-item" (click)="updateTask(task.id, 'COMPLETED')">COMPLETED</button></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>

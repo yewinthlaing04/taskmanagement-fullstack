@@ -1,18 +1,24 @@
 package com.ye.task.service.admin;
 
+import com.ye.task.dto.CommentDto;
 import com.ye.task.dto.TaskDto;
 import com.ye.task.dto.UserDto;
+import com.ye.task.entity.Comment;
 import com.ye.task.entity.Task;
 import com.ye.task.entity.User;
 import com.ye.task.enums.TaskStatus;
 import com.ye.task.enums.UserRoles;
 import com.ye.task.exception.TaskNotFoundException;
+import com.ye.task.repo.CommentRepository;
 import com.ye.task.repo.TaskRepository;
 import com.ye.task.repo.UserRepository;
+import com.ye.task.utils.JwtUtil;
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Comparator;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -25,6 +31,12 @@ public class AdminServiceImpl implements AdminService{
 
     @Autowired
     private TaskRepository taskRepository;
+
+    @Autowired
+    private JwtUtil jwtUtil;
+
+    @Autowired
+    private CommentRepository commentRepository;
 
     @Override
     public List<UserDto> getUsers() {
@@ -110,6 +122,30 @@ public class AdminServiceImpl implements AdminService{
                 .map(Task::getTaskDto)
                 .collect(Collectors.toList());
     }
+
+    @Override
+    public CommentDto createComment(Long taskId, String content) {
+
+        Optional<Task> optionalTask = taskRepository.findById(taskId);
+        User user = jwtUtil.getLoggedInUser();
+
+        if ( optionalTask.isPresent() && user != null ) {
+            Comment comment = new Comment();
+            comment.setCreatedAt(new Date());
+            comment.setContent(content);
+            comment.setTask(optionalTask.get());
+            comment.setUser(user);
+            return commentRepository.save(comment).getCommentDto();
+        }
+        throw new EntityNotFoundException("User or task not found ");
+    }
+
+    @Override
+    public List<CommentDto> getCommentsByTaskId(Long taskId) {
+        return commentRepository.findAllByTaskId(taskId).stream().map(Comment::getCommentDto)
+                .collect(Collectors.toList());
+    }
+
 
     private TaskStatus mapStringToTaskStatus(String status){
         return switch(status){

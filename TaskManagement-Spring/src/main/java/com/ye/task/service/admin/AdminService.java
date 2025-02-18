@@ -1,5 +1,6 @@
 package com.ye.task.service.admin;
 
+import com.ye.task.dto.CommentDto;
 import com.ye.task.dto.TaskDto;
 import com.ye.task.dto.UserDto;
 
@@ -20,4 +21,10 @@ public interface AdminService {
     TaskDto updateTask(Long id , TaskDto taskDto);
 
     List<TaskDto> searchTaskByTitle(String title);
+
+    CommentDto createComment(Long taskId , String content );
+
+
+
+    List<CommentDto> getCommentsByTaskId(Long taskId);
 }
